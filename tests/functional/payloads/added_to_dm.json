@@ -1,0 +1,16 @@
+{
+  "eventTime": "2019-10-25T19:41:57.081773Z",
+  "space": {
+    "name": "spaces/abcdef",
+    "singleUserBotDm": true,
+    "type": "DM"
+  },
+  "type": "ADDED_TO_SPACE",
+  "user": {
+    "avatarUrl": "https://lh3.googleusercontent.com/a-/acxeGEwqQFHJnR8w5trf",
+    "displayName": "Jean Pimentel",
+    "email": "jpimentel@ciandt.com",
+    "name": "users/123456789123456789123",
+    "type": "HUMAN"
+  }
+}

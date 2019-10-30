@@ -1,0 +1,40 @@
+{
+  "eventTime": "2019-10-25T20:16:34.857919Z",
+  "message": {
+    "argumentText": "ping",
+    "createTime": "2019-10-25T20:16:34.857919Z",
+    "name": "spaces/abcdef/messages/tyfV_7WN6sw.tyfV_7WN6sw",
+    "sender": {
+      "avatarUrl": "https://lh3.googleusercontent.com/a-/acxeGEwqQFHJnR8w5trf",
+      "displayName": "Jean Pimentel",
+      "email": "jpimentel@ciandt.com",
+      "name": "users/123456789123456789123",
+      "type": "HUMAN"
+    },
+    "space": {
+      "name": "spaces/abcdef",
+      "singleUserBotDm": true,
+      "type": "DM"
+    },
+    "text": "ping",
+    "thread": {
+      "name": "spaces/abcdef/threads/tyfV_7WN6sw",
+      "retentionSettings": {
+        "state": "PERMANENT"
+      }
+    }
+  },
+  "space": {
+    "name": "spaces/abcdef",
+    "singleUserBotDm": true,
+    "type": "DM"
+  },
+  "type": "MESSAGE",
+  "user": {
+    "avatarUrl": "https://lh3.googleusercontent.com/a-/acxeGEwqQFHJnR8w5trf",
+    "displayName": "Jean Pimentel",
+    "email": "jpimentel@ciandt.com",
+    "name": "users/123456789123456789123",
+    "type": "HUMAN"
+  }
+}

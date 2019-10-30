@@ -1,0 +1,58 @@
+{
+  "eventTime": "2019-10-25T20:51:22.090767Z",
+  "message": {
+    "annotations": [
+      {
+        "length": 13,
+        "startIndex": 0,
+        "type": "USER_MENTION",
+        "userMention": {
+          "type": "MENTION",
+          "user": {
+            "avatarUrl": "https://lh3.googleusercontent.com/proxy/71ExWxpgyWr2Y5nw-T0hF0_BUnl8",
+            "displayName": "Tech Gallery",
+            "name": "users/114444447777711133333",
+            "type": "BOT"
+          }
+        }
+      }
+    ],
+    "argumentText": " invalid command",
+    "createTime": "2019-10-25T20:51:22.090767Z",
+    "name": "spaces/AAAABBBCCD/messages/xHoyB_90fTQ.PqA88ZVyvus",
+    "sender": {
+      "avatarUrl": "https://lh3.googleusercontent.com/a-/acxeGEwqQFHJnR8w5trf",
+      "displayName": "Jean Pimentel",
+      "email": "jpimentel@ciandt.com",
+      "name": "users/123456789123456789123",
+      "type": "HUMAN"
+    },
+    "space": {
+      "displayName": "Testing room",
+      "name": "spaces/AAAABBBCCD",
+      "threaded": true,
+      "type": "ROOM"
+    },
+    "text": "@Tech Gallery invalid command",
+    "thread": {
+      "name": "spaces/AAAABBBCCD/threads/xHoyB_90fTQ",
+      "retentionSettings": {
+        "state": "PERMANENT"
+      }
+    }
+  },
+  "space": {
+    "displayName": "Testing room",
+    "name": "spaces/AAAABBBCCD",
+    "threaded": true,
+    "type": "ROOM"
+  },
+  "type": "MESSAGE",
+  "user": {
+    "avatarUrl": "https://lh3.googleusercontent.com/a-/acxeGEwqQFHJnR8w5trf",
+    "displayName": "Jean Pimentel",
+    "email": "jpimentel@ciandt.com",
+    "name": "users/123456789123456789123",
+    "type": "HUMAN"
+  }
+}

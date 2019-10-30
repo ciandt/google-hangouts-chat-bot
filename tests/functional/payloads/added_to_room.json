@@ -1,0 +1,17 @@
+{
+  "eventTime": "2019-10-25T19:38:58.204496Z",
+  "space": {
+    "displayName": "Testing room",
+    "name": "spaces/AAAABBBCCD",
+    "threaded": true,
+    "type": "ROOM"
+  },
+  "type": "ADDED_TO_SPACE",
+  "user": {
+    "avatarUrl": "https://lh3.googleusercontent.com/a-/acxeGEwqQFHJnR8w5trf",
+    "displayName": "Jean Pimentel",
+    "email": "jpimentel@ciandt.com",
+    "name": "users/123456789123456789123",
+    "type": "HUMAN"
+  }
+}
