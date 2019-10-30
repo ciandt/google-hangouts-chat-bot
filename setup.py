@@ -16,12 +16,12 @@ def requires():
 
 if __name__ == "__main__":
     setup(
-        name="google_hangouts_chat_bot",
+        name="google-hangouts-chat-bot",
         version=__version__,
         description="A framework for Google Hangouts Chat Bot",
         long_description=readme(),
         long_description_content_type="text/markdown",
-        url="https://github.com/ciandt/google_hangouts_chat_bot",
+        url="https://github.com/ciandt/google-hangouts-chat-bot",
         author="Jean Pimentel",
         author_email="contato@jeanpimentel.com.br",
         packages=find_packages(exclude=["tests"]),

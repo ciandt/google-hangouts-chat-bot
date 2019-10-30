@@ -27,7 +27,7 @@ install: clean uninstall
 	@python setup.py install
 
 uninstall:
-	@pip uninstall -y google_hangouts_chat_bot
+	@pip uninstall -y google-hangouts-chat-bot
 	@make clean
 
 upload: clean tests
