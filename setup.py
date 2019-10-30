@@ -24,7 +24,7 @@ if __name__ == "__main__":
         url="https://github.com/ciandt/google-hangouts-chat-bot",
         author="Jean Pimentel",
         author_email="contato@jeanpimentel.com.br",
-        packages=find_packages(exclude=["tests"]),
+        packages=['google_hangouts_chat_bot'],
         install_requires=requires(),
         python_requires=">=3.7",
         license="MIT",
