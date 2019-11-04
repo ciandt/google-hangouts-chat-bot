@@ -6,7 +6,7 @@ from google_hangouts_chat_bot.responses import create_text_response
 
 
 class EventHandler:
-    def __init__(self, payload, commands):
+    def __init__(self, payload, commands, **kwargs):
         if not isinstance(payload, dict):
             raise TypeError("Invalid payload")
 
@@ -23,6 +23,7 @@ class EventHandler:
 
         self._payload = payload
         self._commands = commands.get_commands()
+        self._kwargs = kwargs
 
     def process(self):
 
@@ -78,8 +79,10 @@ class EventHandler:
             return self._invalid_command(command)
 
         try:
+            self._kwargs.update({"sender": sender, "commands": self._commands})
+
             klass = self._commands.get(command)
-            return klass().handle(args, sender=sender, commands=self._commands)
+            return klass().handle(args, **self._kwargs)
         except Exception as exc:
             logging.exception(exc)
             return create_text_response("Oops, something went wrong!")

@@ -2,10 +2,10 @@ import pytest
 
 from google_hangouts_chat_bot.commands import Commands
 from google_hangouts_chat_bot.event_handler import EventHandler
-from tests.unit.helpers import NotImplementedCommand
-from tests.unit.commands.Hidden import Hidden
-from tests.unit.commands.Hello import Hello
 from tests.unit.commands.Ciao import Ciao
+from tests.unit.commands.Hello import Hello
+from tests.unit.commands.Hidden import Hidden
+from tests.unit.helpers import NotImplementedCommand, DependencyInjection
 
 
 def test_event_handler_with_none_payload():
@@ -133,3 +133,22 @@ def test_event_handler_hello():
     expected = {"text": "Hello, Jean!"}
 
     assert EventHandler(payload, commands).process() == expected
+
+
+def test_event_handler_dependency():
+    payload = {
+        "type": "MESSAGE",
+        "message": {"text": "dependency", "sender": {}},
+        "space": "",
+        "user": "",
+    }
+
+    commands = Commands()
+    commands.add_command(DependencyInjection)
+
+    expected = {"text": "Repository = some-repository"}
+
+    assert (
+        EventHandler(payload, commands, repository="some-repository").process()
+        == expected
+    )
