@@ -2,7 +2,7 @@
 # -*- makefile -*-
 
 deps:
-	@pip install --no-cache -q -r requirements-dev.txt
+	@python -m pip install --no-cache -q -r requirements-dev.txt
 
 clean:
 	@echo "Cleaning..."
@@ -21,13 +21,13 @@ coverage:
 	@python -m pytest --cov=google_hangouts_chat_bot --cov-report=term --cov-report=html tests
 
 format:
-	@black --target-version=py37 google_hangouts_chat_bot tests
+	@python -m black --target-version=py37 google_hangouts_chat_bot tests
 
 install: clean uninstall
 	@python setup.py install
 
 uninstall:
-	@pip uninstall -y google-hangouts-chat-bot
+	@python -m pip uninstall -y google-hangouts-chat-bot
 	@make clean
 
 upload: clean tests
