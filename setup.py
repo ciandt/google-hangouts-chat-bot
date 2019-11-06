@@ -1,17 +1,17 @@
 #!/usr/bin/env python
 from pathlib import Path
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 from google_hangouts_chat_bot.version import __version__
 
 
 def readme():
-    return Path('README.md').read_text()
+    return Path("README.md").read_text()
 
 
 def requires():
-    return Path('requirements.txt').read_text().splitlines()
+    return Path("requirements.txt").read_text().splitlines()
 
 
 if __name__ == "__main__":
@@ -24,7 +24,7 @@ if __name__ == "__main__":
         url="https://github.com/ciandt/google-hangouts-chat-bot",
         author="Jean Pimentel",
         author_email="contato@jeanpimentel.com.br",
-        packages=['google_hangouts_chat_bot'],
+        packages=["google_hangouts_chat_bot"],
         install_requires=requires(),
         python_requires=">=3.7",
         license="MIT",
@@ -37,6 +37,7 @@ if __name__ == "__main__":
             "Natural Language :: English",
             "Operating System :: OS Independent",
             "Programming Language :: Python :: 3.7",
+            "Programming Language :: Python :: 3.8",
             "Topic :: Communications",
             "Topic :: Software Development :: Libraries",
         ],
