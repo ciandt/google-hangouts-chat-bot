@@ -47,7 +47,9 @@ def create_card_paragraph(text):
     return {"textParagraph": {"text": text}}
 
 
-def create_card_key_value(top_label, content, bottom_label=None, icon=None):
+def create_card_key_value(
+    top_label, content, bottom_label=None, icon=None, on_click=None
+):
     if not top_label:
         raise ValueError(f"Invalid top_label: {top_label}")
 
@@ -61,6 +63,9 @@ def create_card_key_value(top_label, content, bottom_label=None, icon=None):
 
     if icon:
         key_value.update({"icon": icon})
+
+    if on_click:
+        key_value.update({"onClick": {"openLink": {"url": on_click}}})
 
     return {"keyValue": key_value}
 

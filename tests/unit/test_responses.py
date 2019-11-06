@@ -146,6 +146,21 @@ def test_create_card_key_value_with_icon():
     )
 
 
+def test_create_card_key_value_with_on_click():
+    expected = {
+        "keyValue": {
+            "topLabel": "Top Label",
+            "content": "Content",
+            "onClick": {"openLink": {"url": "https://url.com"}},
+        }
+    }
+
+    assert (
+        create_card_key_value("Top Label", "Content", on_click="https://url.com")
+        == expected
+    )
+
+
 def test_create_invalid_card_image():
     with pytest.raises(ValueError):
         create_card_image(None)
