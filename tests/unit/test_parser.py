@@ -38,7 +38,7 @@ def test_quoted_payload():
 
 
 def test_mention_without_annotations_payload():
-    args = parse({"text": "@Tech Gallery hello world",})
+    args = parse({"text": "@Tech Gallery hello world"})
 
     assert args == ["@Tech", "Gallery", "hello", "world"]
 

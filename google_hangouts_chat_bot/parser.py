@@ -2,7 +2,7 @@ import shlex
 
 
 def parse(message):
-    if not "text" in message:
+    if "text" not in message:
         raise ValueError("Invalid message data")
 
     text = message["text"]
