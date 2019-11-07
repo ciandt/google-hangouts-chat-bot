@@ -74,7 +74,7 @@ def main():
 
 ## How it works?
 
-1- Command _(our base class)_:
+1 - `Command` _(our base class)_:
 
 ```python
 class Command:
@@ -98,7 +98,7 @@ class Command:
         raise NotImplementedError
 ```
 
-Let's create a *Hello* command:
+1.1 - Let's create a *Hello* command:
 ```python
 class Hello(Command):
     command = "hello"
@@ -110,10 +110,10 @@ class Hello(Command):
         return create_text_response(f"Hello, {arguments[0]}!")
 ```
 
-2- Commands:
+2 - `Commands`:
 
 ```python
-# List of available commands  
+# Creating a list of available commands  
 commands = Commands()
 commands.add_command(Hello)
 
@@ -121,14 +121,17 @@ commands.add_command(Hello)
 commands.add_commands_from_module(some.module)
 ```
 
-3- EventHandler:
+3 - `EventHandler`:
 
 ```python
 payload = {...}
+
+# it receives the payload, commands list and more kwargs if needed
+# then it processes the payload, returning a response
 response = EventHandler(payload, commands).process()
 ```
 
-Sending a "hello" message:
+4 - Sending a "hello" message:
 ```python
 commands = Commands()
 commands.add_command(Hello)
@@ -140,11 +143,17 @@ payload = {
     "user": "...",
 }
 
-# message will be parsed, returning:
-#   command = "hello", 
+# message will be parsed, identifying:
+#   command = "hello" 
 #   arguments = ["Jane"]
-
-# since we have a command triggered by "hello", an instance will be created and called:
+# 
+# since we have a command triggered by "hello"
+# 
+# class Hello(Command):
+#   command = "hello"
+#   ...
+# 
+# an instance will be created and called:
 #   return Hello().handle(arguments) 
 
 response = EventHandler(payload, commands).process()
@@ -153,17 +162,16 @@ print(response)
 {"text": "Hello, Jane!"}
 ```
 
-_work in progress_
-
----
+## Google Hangouts Chat
 
 The following diagram describes a typical interaction with a bot in a chat room:
 
 ![Flow diagram](https://developers.google.com/hangouts/chat/images/bot-room-seq.png)
 
-
-
-
+* [Design guidelines](https://developers.google.com/hangouts/chat/concepts/ux)
+* [Creating new bots](https://developers.google.com/hangouts/chat/how-tos/bots-develop)
+* [Publishing bots](https://developers.google.com/hangouts/chat/how-tos/bots-publish)
+* [Hangouts Chat message formats](https://developers.google.com/hangouts/chat/reference/message-formats/)
 
 
 ## Installing
@@ -171,7 +179,7 @@ The following diagram describes a typical interaction with a bot in a chat room:
 You can install using [pip](https://pip.pypa.io/en/stable/):
 
 ```
-$ pip install google_hangouts_chat_bot
+$ python -m pip install google_hangouts_chat_bot
 ```
 
 
