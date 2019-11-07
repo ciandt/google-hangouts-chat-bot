@@ -6,21 +6,73 @@
 ![PyPI status](https://img.shields.io/pypi/status/google-hangouts-chat-bot.svg)
 [![License: MIT](https://img.shields.io/pypi/l/google-hangouts-chat-bot.svg)](https://github.com/ciandt/google-hangouts-chat-bot/blob/master/LICENSE)
 
-This is a framework you can use to build bots for Google Hangouts Chat.
+This is a framework you can use to build bots for Google Hangouts Chat. (You can read more about Google Hangouts Chat below.)
+
 It was made to be simple and extensible.
 
-### What it does?
+## What it does?
 
-There are many ways to create a bot for Google Hangouts Chat. 
-One of them is using HTTP endpoints and this framework here was built to facilitate it.
+There are many ways to create a bot for Google Hangouts Chat and one of them is using HTTP endpoints.
+In a nutshell, the bot receives a JSON payload via an HTTP POST request and should respond it with another JSON, following a defined message format.
 
-In a nutshell, the bot receives a JSON payload via a HTTP POST request and should respond it with another JSON, follow a defined message format.
+This framework was built to facilitate the creation of _cli_-like bots. It parses the payload and verifies if there is some command associated with the message. If there is one, this command is called and the result is returned.  
 
-The following diagram describes a typical interaction with a bot in a chat room:
+The main pieces are:
+- `Command`: our base command class
+- `Commands`: a collection of commands
+- `EventHandler`: the core, responsible to parse the message and call the associated command.
+ 
+In addition to that, we have:
+- response helpers: to create the responses with the right format.
+	- `create_text_response()`
+	- `create_cards_response()`
+	- `create_card_header()`
+	- `create_card_paragraph()`
+	- `create_card_key_value()`
+	- `create_card_image()`
+	- `create_card()`
+	
+- security helpers:
+    - `check_allowed_domain` - to verify if user can use the bot
+    - `check_bot_authenticity` -  to verify if the request was made by a real bot
+	
+- built-in `Help` command:
 
-![Flow diagram](https://developers.google.com/hangouts/chat/images/bot-room-seq.png)
+When invoked, it will return a message with available commands (example):
 
-#### How to use this framework?
+```
+Commands available:
+
+hello <name>
+Say hello
+
+sum <n>...
+Sum informed values
+
+# Repeat for every non-hidden command
+# [command] [arguments]
+# [description]
+
+help
+List commands available
+
+HINT: If you need to specify multiple words for a parameter, use quotes (").
+```
+
+### Atention
+
+- This framework is not a web framework. You need to use it with one solution.
+
+Example using _Flask_:
+```python
+@app.route("/", methods=["POST"])
+def main():
+    payload = request.get_json()
+    response = EventHandler(payload, commands).process()
+    return json.jsonify(response)
+```
+
+## How it works?
 
 1- Command _(our base class)_:
 
@@ -83,7 +135,7 @@ commands.add_command(Hello)
 
 payload = {
     "type": "MESSAGE",
-    "message": {"text": "hello Jane"},
+    "message": {"text": "hello Jane"}, # what the user has typed
     "space": "...",
     "user": "...",
 }
@@ -91,6 +143,7 @@ payload = {
 # message will be parsed, returning:
 #   command = "hello", 
 #   arguments = ["Jane"]
+
 # since we have a command triggered by "hello", an instance will be created and called:
 #   return Hello().handle(arguments) 
 
@@ -100,27 +153,17 @@ print(response)
 {"text": "Hello, Jane!"}
 ```
 
-#### Built-in command: Help
-
-It will list available commands (example):
-
-```
-Commands available:
-
-hello <name>
-Say hello
-
-ciao <name>
-Say ciao
-
-help
-List commands available
-
-HINT: If you need to specify multiple words for a parameter, use quotes (").
-```
-
-
 _work in progress_
+
+---
+
+The following diagram describes a typical interaction with a bot in a chat room:
+
+![Flow diagram](https://developers.google.com/hangouts/chat/images/bot-room-seq.png)
+
+
+
+
 
 
 ## Installing
