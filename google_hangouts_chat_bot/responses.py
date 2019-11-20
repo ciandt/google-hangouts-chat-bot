@@ -70,7 +70,7 @@ def create_card_key_value(
     return {"keyValue": key_value}
 
 
-def create_card_image(image_url, image_link=None):
+def create_card_image(image_url, link=None):
     if not image_url:
         raise ValueError(f"Invalid image_url: {image_url}")
 
@@ -78,10 +78,56 @@ def create_card_image(image_url, image_link=None):
         "imageUrl": image_url,
     }
 
-    if image_link:
-        image.update({"onClick": {"openLink": {"url": image_link}}})
+    if link:
+        image.update({"onClick": {"openLink": {"url": link}}})
 
     return {"image": image}
+
+
+def create_card_buttons(buttons):
+    if not isinstance(buttons, list):
+        raise TypeError(f"Buttons should be a list")
+
+    return {"buttons": buttons}
+
+
+def create_card_text_button(text, *, link=None, action=None, params=None):
+    if not text:
+        raise ValueError(f"Invalid text: {text}")
+
+    if not link and not action:
+        raise ValueError(f"A link or an action should be informed")
+
+    if link and action:
+        raise ValueError(f"Link and action informed. Only one should be informed")
+
+    if link:
+        on_click = {"openLink": {"url": link}}
+    else:
+        on_click = {}
+
+        if params:
+            if not isinstance(params, dict):
+                raise TypeError("params should be a dict")
+
+            on_click.update(
+                {
+                    "action": {
+                        "actionMethodName": action,
+                        "parameters": [
+                            {"key": key, "value": value}
+                            for key, value in params.items()
+                        ],
+                    }
+                }
+            )
+
+        else:
+            on_click.update({"action": {"actionMethodName": action}})
+
+    button = {"text": text, "onClick": on_click}
+
+    return {"textButton": button}
 
 
 def create_card(widgets, header=None):
@@ -120,27 +166,7 @@ def create_card(widgets, header=None):
 #     words = event_message.lower().split()
 #
 #     for word in words:
-#
-#         if word == 'interactivetextbutton':
-#             widgets.append({
-#                 'buttons': [
-#                     {
-#                         'textButton': {
-#                             'text': 'INTERACTIVE BUTTON',
-#                             'onClick': {
-#                                 'action': {
-#                                     'actionMethodName': INTERACTIVE_TEXT_BUTTON_ACTION,
-#                                     'parameters': [{
-#                                         'key': INTERACTIVE_BUTTON_PARAMETER_KEY,
-#                                         'value': event_message
-#                                     }]
-#                                 }
-#                             }
-#                         }
-#                     }
-#                 ]
-#             })
-#
+##
 #         elif word == 'interactiveimagebutton':
 #             widgets.append({
 #                 'buttons': [
@@ -154,22 +180,6 @@ def create_card(widgets, header=None):
 #                                         'key': INTERACTIVE_BUTTON_PARAMETER_KEY,
 #                                         'value': event_message
 #                                     }]
-#                                 }
-#                             }
-#                         }
-#                     }
-#                 ]
-#             })
-#
-#         elif word == 'textbutton':
-#             widgets.append({
-#                 'buttons': [
-#                     {
-#                         'textButton': {
-#                             'text': 'TEXT BUTTON',
-#                             'onClick': {
-#                                 'openLink': {
-#                                     'url': 'https://developers.google.com',
 #                                 }
 #                             }
 #                         }

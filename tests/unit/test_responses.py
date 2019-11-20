@@ -8,6 +8,8 @@ from google_hangouts_chat_bot.responses import (
     create_card_image,
     create_card,
     create_cards_response,
+    create_card_text_button,
+    create_card_buttons,
 )
 
 
@@ -15,7 +17,7 @@ def test_create_text_response():
     assert create_text_response("hello") == {"text": "hello"}
 
 
-def test_create_invalid_text_response():
+def test_create_text_response_with_invalid_arguments():
     with pytest.raises(ValueError):
         create_text_response(None)
 
@@ -90,7 +92,7 @@ def test_create_card_header_with_invalid_style():
         )
 
 
-def test_create_invalid_card_paragraph():
+def test_create_card_paragraph_with_invalid_arguments():
     with pytest.raises(ValueError):
         create_card_paragraph(None)
 
@@ -111,7 +113,7 @@ def test_create_card_key_value_with_invalid_content():
         create_card_key_value("Top Label", None)
 
 
-def test_create_simple_card_key_value():
+def test_create_card_key_value():
     expected = {"keyValue": {"topLabel": "Top Label", "content": "Content"}}
 
     assert create_card_key_value("Top Label", "Content") == expected
@@ -161,7 +163,7 @@ def test_create_card_key_value_with_on_click():
     )
 
 
-def test_create_invalid_card_image():
+def test_create_card_image_with_invalid_arguments():
     with pytest.raises(ValueError):
         create_card_image(None)
 
@@ -185,12 +187,112 @@ def test_create_card_image_with_link():
     )
 
 
-def test_create_invalid_card():
+@pytest.mark.parametrize("args", [None, "", "with-text-but-without-link-or-action"])
+def test_create_card_text_button_with_invalid_arguments(args):
+    with pytest.raises(ValueError):
+        create_card_text_button(args)
+
+
+def test_create_card_text_button_with_link_and_action():
+    with pytest.raises(ValueError):
+        create_card_text_button("Text", link="https://server.com", action="action")
+
+
+def test_create_card_text_button_with_link():
+    expected = {
+        "textButton": {
+            "text": "Text",
+            "onClick": {"openLink": {"url": "https://server.com"}},
+        }
+    }
+
+    assert create_card_text_button("Text", link="https://server.com") == expected
+
+
+def test_create_card_text_button_with_action():
+    expected = {
+        "textButton": {
+            "text": "Text",
+            "onClick": {"action": {"actionMethodName": "my-action"}},
+        }
+    }
+
+    assert create_card_text_button("Text", action="my-action") == expected
+
+
+@pytest.mark.parametrize("params", ["invalid", ["a", "b"]])
+def test_create_card_text_button_with_action_and_invalid_params(params):
+    with pytest.raises(TypeError):
+        create_card_text_button("Text", action="action", params=params)
+
+
+def test_create_card_text_button_with_action_and_params():
+    expected = {
+        "textButton": {
+            "text": "Text",
+            "onClick": {
+                "action": {
+                    "actionMethodName": "my-action",
+                    "parameters": [
+                        {"key": "id", "value": "jane"},
+                        {"key": "name", "value": "Jane Doe"},
+                    ],
+                }
+            },
+        }
+    }
+
+    assert (
+        create_card_text_button(
+            "Text", action="my-action", params={"id": "jane", "name": "Jane Doe"}
+        )
+        == expected
+    )
+
+
+@pytest.mark.parametrize(
+    "args", [None, "", "with-text-but-without-link-or-action", {"a": "b"}]
+)
+def test_create_card_buttons_with_invalid_arguments(args):
+    with pytest.raises(TypeError):
+        create_card_buttons(args)
+
+
+def test_create_card_buttons():
+    expected = {
+        "buttons": [
+            {
+                "textButton": {
+                    "text": "Link",
+                    "onClick": {"openLink": {"url": "https://server.com"}},
+                }
+            },
+            {
+                "textButton": {
+                    "text": "Action",
+                    "onClick": {"action": {"actionMethodName": "my-action"}},
+                }
+            },
+        ]
+    }
+
+    assert (
+        create_card_buttons(
+            [
+                create_card_text_button("Link", link="https://server.com"),
+                create_card_text_button("Action", action="my-action"),
+            ]
+        )
+        == expected
+    )
+
+
+def test_create_card_with_invalid_arguments():
     with pytest.raises(TypeError):
         assert create_card(None)
 
 
-def test_create_invalid_card_with_empty_list():
+def test_create_card_with_empty_list():
     with pytest.raises(ValueError):
         assert create_card([None, None])
 
@@ -254,12 +356,12 @@ def test_create_card_with_header():
     assert create_card(widgets, header=header) == expected
 
 
-def test_create_invalid_cards_response():
+def test_create_cards_response_with_invalid_arguments():
     with pytest.raises(TypeError):
         assert create_cards_response(None)
 
 
-def test_create_invalid_cards_response_with_empty_list():
+def test_create_cards_response_with_empty_list():
     with pytest.raises(ValueError):
         assert create_cards_response([None, None])
 
