@@ -19,3 +19,10 @@ def parse(message):
             text = text.replace(name, email, 1)
 
     return shlex.split(text.strip())
+
+
+def parse_action(action):
+    if "actionMethodName" not in action:
+        raise ValueError("Invalid action data")
+
+    return shlex.split(action["actionMethodName"].strip())
