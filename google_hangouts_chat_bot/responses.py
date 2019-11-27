@@ -1,11 +1,22 @@
-def create_text_response(text):
+def _update_message_response(response):
+    response.update({"actionResponse": {"type": "UPDATE_MESSAGE"}})
+
+    return response
+
+
+def create_text_response(text, *, update_message=False):
     if not text:
         raise ValueError(f"Invalid text: {text}")
 
-    return {"text": text}
+    response = {"text": text}
+
+    if update_message:
+        response = _update_message_response(response)
+
+    return response
 
 
-def create_cards_response(cards):
+def create_cards_response(cards, *, update_message=False):
     if not isinstance(cards, list):
         raise TypeError(f"Cards should be a list")
 
@@ -13,7 +24,12 @@ def create_cards_response(cards):
     if len(cards) == 0:
         raise ValueError(f"Cards should not be empty")
 
-    return {"cards": cards}
+    response = {"cards": cards}
+
+    if update_message:
+        response = _update_message_response(response)
+
+    return response
 
 
 def create_card_header(title, subtitle, image, image_style="IMAGE"):

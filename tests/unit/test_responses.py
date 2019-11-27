@@ -17,6 +17,13 @@ def test_create_text_response():
     assert create_text_response("hello") == {"text": "hello"}
 
 
+def test_create_text_response_with_update_message():
+    assert create_text_response("hello", update_message=True) == {
+        "actionResponse": {"type": "UPDATE_MESSAGE"},
+        "text": "hello",
+    }
+
+
 def test_create_text_response_with_invalid_arguments():
     with pytest.raises(ValueError):
         create_text_response(None)
@@ -415,3 +422,52 @@ def test_create_cards_response():
     }
 
     assert create_cards_response([card1, card2]) == expected
+
+
+def test_create_cards_response_with_update_message():
+    header = create_card_header("Title", "Subtitle", "http://server.com/header.png")
+
+    widgets = [
+        create_card_paragraph("Hello"),
+        create_card_image("http://server.com/image.png"),
+    ]
+
+    card1 = create_card(widgets, header=header)
+
+    card2 = create_card(
+        [create_card_paragraph("World"), create_card_key_value("Label", "Content")]
+    )
+
+    expected = {
+        "actionResponse": {"type": "UPDATE_MESSAGE"},
+        "cards": [
+            {
+                "header": {
+                    "title": "Title",
+                    "subtitle": "Subtitle",
+                    "imageUrl": "http://server.com/header.png",
+                    "imageStyle": "IMAGE",
+                },
+                "sections": [
+                    {
+                        "widgets": [
+                            {"textParagraph": {"text": "Hello"}},
+                            {"image": {"imageUrl": "http://server.com/image.png"}},
+                        ]
+                    }
+                ],
+            },
+            {
+                "sections": [
+                    {
+                        "widgets": [
+                            {"textParagraph": {"text": "World"}},
+                            {"keyValue": {"content": "Content", "topLabel": "Label"}},
+                        ]
+                    }
+                ]
+            },
+        ],
+    }
+
+    assert create_cards_response([card1, card2], update_message=True) == expected
