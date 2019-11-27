@@ -1,7 +1,7 @@
 import logging
 
 from google_hangouts_chat_bot.commands import Commands
-from google_hangouts_chat_bot.parser import parse
+from google_hangouts_chat_bot.parser import parse, parse_action
 from google_hangouts_chat_bot.responses import create_text_response
 
 
@@ -38,6 +38,9 @@ class EventHandler:
         if event_type == "MESSAGE":
             return self._on_message()
 
+        if event_type == "CARD_CLICKED":
+            return self._on_card_clicked()
+
         raise ValueError(f"Invalid event type: {event_type}")
 
     def _on_added_to_space(self):
@@ -73,13 +76,27 @@ class EventHandler:
         if len(args) == 0:
             args = ["help"]
 
+        return self._invoke_commands(args, sender=sender)
+
+    def _on_card_clicked(self):
+        args = parse_action(self._payload["action"])
+        action_parameters = self._payload["action"].get("parameters", [])
+
+        logging.info("Args parsed: %s", args)
+
+        return self._invoke_commands(
+            args, from_action=True, action_parameters=action_parameters
+        )
+
+    def _invoke_commands(self, args, **kwargs):
         command = args.pop(0).lower()
 
         if command not in self._commands:
             return self._invalid_command(command)
 
         try:
-            self._kwargs.update({"sender": sender, "commands": self._commands})
+            self._kwargs.update(kwargs)
+            self._kwargs.update({"commands": self._commands})
 
             klass = self._commands.get(command)
             return klass().handle(args, **self._kwargs)
