@@ -30,6 +30,8 @@ In addition to that, we have:
 	- `create_card_paragraph()`
 	- `create_card_key_value()`
 	- `create_card_image()`
+	- `create_card_buttons()`
+	- `create_card_text_button`
 	- `create_card()`
 	
 - security helpers:

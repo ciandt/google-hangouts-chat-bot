@@ -1,0 +1,112 @@
+{
+  "type": "CARD_CLICKED",
+  "eventTime": "2019-11-20T21:36:11.409951Z",
+  "message": {
+    "name": "spaces/abcdef/messages/123456",
+    "sender": {
+      "name": "users/123456789123456789123",
+      "type": "BOT"
+    },
+    "createTime": "2019-11-20T21:36:11.409951Z",
+    "cards": [
+      {
+        "sections": [
+          {
+            "widgets": [
+              {
+                "textParagraph": {
+                  "text": "Item 1"
+                }
+              },
+              {
+                "buttons": [
+                  {
+                    "textButton": {
+                      "text": "Assign",
+                      "onClick": {
+                        "action": {
+                          "actionMethodName": "my-action",
+                          "parameters": [
+                            {
+                              "key": "id",
+                              "value": "1"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "sections": [
+          {
+            "widgets": [
+              {
+                "textParagraph": {
+                  "text": "Item 2"
+                }
+              },
+              {
+                "buttons": [
+                  {
+                    "textButton": {
+                      "text": "Assign",
+                      "onClick": {
+                        "action": {
+                          "actionMethodName": "my-action",
+                          "parameters": [
+                            {
+                              "key": "id",
+                              "value": "2"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "thread": {
+      "name": "spaces/abcdef/threads/1234",
+      "retentionSettings": {
+        "state": "PERMANENT"
+      }
+    },
+    "space": {
+      "name": "spaces/abcdef",
+      "type": "DM",
+      "singleUserBotDm": true
+    }
+  },
+  "user": {
+    "name": "users/123456789123456789123",
+    "displayName": "Jean Pimentel",
+    "avatarUrl": "https://lh3.googleusercontent.com/a-/acxeGEwqQFHJnR8w5trf",
+    "email": "jpimentel@ciandt.com",
+    "type": "HUMAN"
+  },
+  "space": {
+    "name": "spaces/abcdef",
+    "type": "DM",
+    "singleUserBotDm": true
+  },
+  "action": {
+    "actionMethodName": "ping",
+    "parameters": [
+      {
+        "key": "id",
+        "value": "2"
+      }
+    ]
+  }
+}
